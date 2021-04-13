@@ -67,6 +67,7 @@ extern Term term;
 #define TLINE(y) ((y) < term.scr ? term.hist[((y) + term.histi - \
 		 term.scr + HISTSIZE + 1) % HISTSIZE] : \
 		 term.line[(y) - term.scr])
+#define TLINE_HIST(y)           ((y) <= HISTSIZE-term.row+2 ? term.hist[(y)] : term.line[(y-HISTSIZE+term.row-3)])
 
 extern Selection sel;
 
