@@ -4,7 +4,7 @@
 
 include config.mk
 
-SRC = st.c x.c normalMode.c
+SRC = st.c x.c hb.c normalMode.c
 OBJ = $(SRC:.c=.o)
 
 all: options st
@@ -22,7 +22,8 @@ config.h:
 	$(CC) $(STCFLAGS) -c $<
 
 st.o: config.h st.h win.h dynamicArray.h normalMode.h term.h glyph.h error.h
-x.o: arg.h config.h st.h win.h dynamicArray.h normalMode.h term.h glyph.h error.h
+x.o: arg.h config.h st.h win.h hb.h dynamicArray.h normalMode.h term.h glyph.h error.h
+hb.o: st.h
 
 $(OBJ): config.h config.mk
 
