@@ -248,8 +248,13 @@ ResourcePref resources[] = {
  */
 static MouseShortcut mshortcuts[] = {
 	/* mask            button       function        argument       release */
-	{ XK_NO_MOD,       Button4,     kscrollup,      {.i = 1} },
-	{ XK_NO_MOD,       Button5,     kscrolldown,    {.i = 1} },
+	/* Scroll up and down */
+	{ XK_NO_MOD,       Button4,     kscrollup,      {.i = 3} },
+	{ XK_NO_MOD,       Button5,     kscrolldown,    {.i = 3} },
+	{ ShiftMask,       Button4,     kscrollup,      {.i = 6} },
+	{ ShiftMask,       Button5,     kscrolldown,    {.i = 6} },
+
+	/* Paste */
 	{ XK_ANY_MOD,      Button2,     selpaste,       {.i = 0},      1 },
 };
 
@@ -258,27 +263,38 @@ static MouseShortcut mshortcuts[] = {
 #define TERMMOD (ControlMask|ShiftMask)
 
 static char *copyurlcmd[] = { "/bin/sh", "-c", "st-urlhandler -c", "externalpipe", NULL };
-static char *copyoutput[] = { "/bin/sh", "-c", "st-copyoutput", "externalpipe", NULL };
+static char *copyoutput[] = { "/bin/sh", "-c", "st-copyoutput -n 3", "externalpipe", NULL };
 
 static Shortcut shortcuts[] = {
 	/* mask                 keysym          function        argument */
-	{ MODKEY,               XK_c,           normalMode,     {.i =  0} },
-	{ XK_ANY_MOD,           XK_Break,       sendbreak,      {.i =  0} },
-	{ ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
-	{ ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
-	{ XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
-	{ TERMMOD,              XK_Prior,       zoom,           {.f = +1} },
-	{ TERMMOD,              XK_Next,        zoom,           {.f = -1} },
-	{ TERMMOD,              XK_Home,        zoomreset,      {.f =  0} },
-	{ TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
-	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
-	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
-	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
-	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
-	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i =  1} },
-	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i =  1} },
-	{ TERMMOD,              XK_L,           externalpipe,   { .v = copyurlcmd } },
-	{ TERMMOD,              XK_O,           externalpipe,   { .v = copyoutput } },
+	/* Replicate some special keys */
+	{ XK_ANY_MOD,     XK_Break,       sendbreak,      {.i =  0} },
+	{ ControlMask,    XK_Print,       toggleprinter,  {.i =  0} },
+	{ ShiftMask,      XK_Print,       printscreen,    {.i =  0} },
+	{ XK_ANY_MOD,     XK_Print,       printsel,       {.i =  0} },
+	{ TERMMOD,        XK_Num_Lock,    numlock,        {.i =  0} },
+
+	/* Zoom in and out */
+	{ TERMMOD,        XK_Prior,       zoom,           {.f = +1} },
+	{ TERMMOD,        XK_Next,        zoom,           {.f = -1} },
+	{ TERMMOD,        XK_Home,        zoomreset,      {.f =  0} },
+
+	/* Copy and paste */
+	{ TERMMOD,        XK_C,           clipcopy,       {.i =  0} },
+	{ TERMMOD,        XK_V,           clippaste,      {.i =  0} },
+	{ TERMMOD,        XK_Y,           selpaste,       {.i =  0} },
+	{ ShiftMask,      XK_Insert,      selpaste,       {.i =  0} },
+
+	/* Scroll up and down */
+	{ ShiftMask,      XK_Page_Up,     kscrollup,      {.i =  1} },
+	{ ShiftMask,      XK_Page_Down,   kscrolldown,    {.i =  1} },
+
+	/* Pipe the content to exnternal binary */
+	{ TERMMOD,        XK_L,           externalpipe,   { .v = copyurlcmd } },
+	{ TERMMOD,        XK_O,           externalpipe,   { .v = copyoutput } },
+
+	/* Vi mode */
+	{ MODKEY,         XK_c,           normalMode,     {.i =  0} },
 };
 
 /*
