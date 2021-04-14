@@ -3,6 +3,11 @@
 # allowing the user to copy the output of one.
 # xclip/xsel required for this script.
 
+msg() {
+	rofi -theme "$HOME/.config/rofi/themes/message.rasi" -e " Nothing to copy! Run a command first!"
+	exit 1
+}
+
 # Create a tempfile to store the output
 tmpfile=$(mktemp /tmp/st-cmd-output.XXXXXX)
 
@@ -13,7 +18,11 @@ sed -i 's/\x0//g' "$tmpfile"
 
 ps1="$(grep "\S" "$tmpfile" | tail -n 1 | sed 's/^\s*//' | cut -d' ' -f1)"
 
-chosen="$(grep -F "$ps1" "$tmpfile" | sed '$ d' | tac | rofi -theme "$HOME/.config/rofi/themes/with-prompt.rasi" -dmenu -i -p "Copy which command's output?" | sed 's/[^^]/[&]/g; s/\^/\\^/g')"
+options="$(grep -F "$ps1" "$tmpfile" | sed '$ d' | tac)"
+
+[ -z "$options" ] && msg
+
+chosen="$(echo "$options" | rofi -theme "$HOME/.config/rofi/themes/with-prompt.rasi" -dmenu -i -p "Copy which command's output?" | sed 's/[^^]/[&]/g; s/\^/\\^/g')"
 
 eps1="$(echo "$ps1" | sed 's/[^^]/[&]/g; s/\^/\\^/g')"
 
