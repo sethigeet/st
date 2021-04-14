@@ -295,6 +295,9 @@ static Shortcut shortcuts[] = {
 
 	/* Vi mode */
 	{ MODKEY,         XK_c,           normalMode,     {.i =  0} },
+
+	/* Open a new window in the same working dir */
+	{ TERMMOD,        XK_Return,      newterm,        {.i =  0} },
 };
 
 /*
