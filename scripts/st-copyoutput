@@ -17,7 +17,10 @@ chosen="$(grep -F "$ps1" "$tmpfile" | sed '$ d' | tac | rofi -theme "$HOME/.conf
 
 eps1="$(echo "$ps1" | sed 's/[^^]/[&]/g; s/\^/\\^/g')"
 
-to_copy="$(awk "/^$chosen$/{p=1;print;next} p&&/$eps1/{p=0};p" "$tmpfile" | head -n -"$(($2 - 1))")"
-
-# copy it to the clipboard
-echo "$to_copy" | xclip -selection clipboard
+while getopts "hn" o; do
+	case "${o}" in
+		h) printf 'Required arguments for custom use:\n  -n: number of line of your prompt\n  -h: Show this message\n' && exit 1 ;;
+		n) echo "$(awk "/^$chosen$/{p=1;print;next} p&&/$eps1/{p=0};p" "$tmpfile" | head -n -"$(($2 - 1))")" | xclip -selection clipboard
+		*) printf 'Invalid option: -%s\n' "$o" && exit 1 ;;
+	esac
+done

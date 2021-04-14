@@ -9,7 +9,8 @@ static char *font = "mono:pixelsize=15:antialias=true:autohint=true";
 /* Spare fonts */
 static char *font2[] = {
        "Noto Color Emoji:pixelsize=12:antialias=true:autohint=true",
-       "JoyPixels:pixelsize=12:antialias=true:autohint=true"
+       "JoyPixels:pixelsize=12:antialias=true:autohint=true",
+       "Symbola:pixelsize=12:antialias=true:autohint=true",
 };
 
 static int borderpx = 2;
@@ -208,8 +209,6 @@ static uint forcemousemod = ShiftMask;
  */
 ResourcePref resources[] = {
 		{ "font",         STRING,  &font },
-		{ "fontalt0",     STRING,  &font2[0] },
-		{ "fontalt1",     STRING,  &font2[1] },
 		{ "color0",       STRING,  &colorname[0] },
 		{ "color1",       STRING,  &colorname[1] },
 		{ "color2",       STRING,  &colorname[2] },
@@ -263,7 +262,7 @@ static MouseShortcut mshortcuts[] = {
 #define TERMMOD (ControlMask|ShiftMask)
 
 static char *copyurlcmd[] = { "/bin/sh", "-c", "st-urlhandler -c", "externalpipe", NULL };
-static char *copyoutput[] = { "/bin/sh", "-c", "st-copyoutput -n 3", "externalpipe", NULL };
+static char *copyoutputcmd[] = { "/bin/sh", "-c", "st-copyoutput -n 3", "externalpipe", NULL };
 
 static Shortcut shortcuts[] = {
 	/* mask                 keysym          function        argument */
@@ -286,12 +285,12 @@ static Shortcut shortcuts[] = {
 	{ ShiftMask,      XK_Insert,      selpaste,       {.i =  0} },
 
 	/* Scroll up and down */
-	{ ShiftMask,      XK_Page_Up,     kscrollup,      {.i =  1} },
-	{ ShiftMask,      XK_Page_Down,   kscrolldown,    {.i =  1} },
+	{ ShiftMask,      XK_Page_Up,     kscrollup,      {.i = -1} },
+	{ ShiftMask,      XK_Page_Down,   kscrolldown,    {.i = -1} },
 
 	/* Pipe the content to exnternal binary */
 	{ TERMMOD,        XK_L,           externalpipe,   { .v = copyurlcmd } },
-	{ TERMMOD,        XK_O,           externalpipe,   { .v = copyoutput } },
+	{ TERMMOD,        XK_O,           externalpipe,   { .v = copyoutputcmd } },
 
 	/* Vi mode */
 	{ MODKEY,         XK_c,           normalMode,     {.i =  0} },

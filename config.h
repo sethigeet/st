@@ -9,7 +9,8 @@ static char *font = "mono:pixelsize=15:antialias=true:autohint=true";
 /* Spare fonts */
 static char *font2[] = {
        "Noto Color Emoji:pixelsize=12:antialias=true:autohint=true",
-       "JoyPixels:pixelsize=12:antialias=true:autohint=true"
+       "JoyPixels:pixelsize=12:antialias=true:autohint=true",
+       "Symbola:pixelsize=12:antialias=true:autohint=true",
 };
 
 static int borderpx = 2;
@@ -113,10 +114,10 @@ char *termname = "st-256color";
  *
  *	stty tabs
  */
-unsigned int tabspaces = 8;
+unsigned int tabspaces = 4;
 
 /* bg opacity */
-float alpha = 0.8;
+float alpha = 0.95;
 
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
@@ -154,7 +155,7 @@ static const char *colorname[] = {
  * Default colors (colorname index)
  * foreground, background, cursor, reverse cursor
  */
-unsigned int defaultfg = 7;
+unsigned int defaultfg = 259;
 unsigned int defaultbg = 258;
 static unsigned int defaultcs = 256;
 static unsigned int defaultrcs = 257;
@@ -193,7 +194,7 @@ static unsigned int highlightBg = 160;
 static unsigned int highlightFg = 15;
 /// Colors for highlighting the current cursor position (row + col) in normal
 /// mode [Vim Browse].
-static unsigned int currentBg = 8;
+static unsigned int currentBg = 1;
 static unsigned int currentFg = 15;
 
 /*
@@ -208,8 +209,6 @@ static uint forcemousemod = ShiftMask;
  */
 ResourcePref resources[] = {
 		{ "font",         STRING,  &font },
-		{ "fontalt0",     STRING,  &font2[0] },
-		{ "fontalt1",     STRING,  &font2[1] },
 		{ "color0",       STRING,  &colorname[0] },
 		{ "color1",       STRING,  &colorname[1] },
 		{ "color2",       STRING,  &colorname[2] },
@@ -255,7 +254,7 @@ static MouseShortcut mshortcuts[] = {
 	{ ShiftMask,       Button5,     kscrolldown,    {.i = 6} },
 
 	/* Paste */
-	{ XK_ANY_MOD,      Button2,     selpaste,       {.i = 0},      1 },
+	{ XK_NO_MOD,       Button2,     selpaste,       {.i = 0},      1 },
 };
 
 /* Internal keyboard shortcuts. */
@@ -263,7 +262,7 @@ static MouseShortcut mshortcuts[] = {
 #define TERMMOD (ControlMask|ShiftMask)
 
 static char *copyurlcmd[] = { "/bin/sh", "-c", "st-urlhandler -c", "externalpipe", NULL };
-static char *copyoutput[] = { "/bin/sh", "-c", "st-copyoutput -n 3", "externalpipe", NULL };
+static char *copyoutputcmd[] = { "/bin/sh", "-c", "st-copyoutput -n 3", "externalpipe", NULL };
 
 static Shortcut shortcuts[] = {
 	/* mask                 keysym          function        argument */
@@ -278,26 +277,48 @@ static Shortcut shortcuts[] = {
 	{ TERMMOD,        XK_Prior,       zoom,           {.f = +1} },
 	{ TERMMOD,        XK_Next,        zoom,           {.f = -1} },
 	{ TERMMOD,        XK_Home,        zoomreset,      {.f =  0} },
+	{ TERMMOD,        XK_Up,          zoom,           {.f = +1} },
+	{ TERMMOD,        XK_Down,        zoom,           {.f = -1} },
+	{ TERMMOD,        XK_K,           zoom,           {.f = +1} },
+	{ TERMMOD,        XK_J,           zoom,           {.f = -1} },
+	{ TERMMOD,        XK_U,           zoom,           {.f = +2} },
+	{ TERMMOD,        XK_D,           zoom,           {.f = -2} },
 
 	/* Copy and paste */
 	{ TERMMOD,        XK_C,           clipcopy,       {.i =  0} },
 	{ TERMMOD,        XK_V,           clippaste,      {.i =  0} },
 	{ TERMMOD,        XK_Y,           selpaste,       {.i =  0} },
 	{ ShiftMask,      XK_Insert,      selpaste,       {.i =  0} },
+	{ MODKEY,         XK_c,           clipcopy,       {.i =  0} },
+	{ MODKEY,         XK_v,           clippaste,      {.i =  0} },
 
 	/* Scroll up and down */
-	{ ShiftMask,      XK_Page_Up,     kscrollup,      {.i =  1} },
-	{ ShiftMask,      XK_Page_Down,   kscrolldown,    {.i =  1} },
+	{ ShiftMask,      XK_Page_Up,     kscrollup,      {.i = -1} },
+	{ ShiftMask,      XK_Page_Down,   kscrolldown,    {.i = -1} },
+	{ MODKEY,         XK_Page_Up,     kscrollup,      {.i = -1} },
+	{ MODKEY,         XK_Page_Down,   kscrolldown,    {.i = -1} },
+	{ MODKEY,         XK_k,           kscrollup,      {.i =  1} },
+	{ MODKEY,         XK_j,           kscrolldown,    {.i =  1} },
+	{ MODKEY,         XK_Up,          kscrollup,      {.i =  1} },
+	{ MODKEY,         XK_Down,        kscrolldown,    {.i =  1} },
+	{ MODKEY,         XK_u,           kscrollup,      {.i = -1} },
+	{ MODKEY,         XK_d,           kscrolldown,    {.i = -1} },
 
 	/* Pipe the content to exnternal binary */
-	{ TERMMOD,        XK_L,           externalpipe,   { .v = copyurlcmd } },
-	{ TERMMOD,        XK_O,           externalpipe,   { .v = copyoutput } },
+	{ TERMMOD,        XK_L,           externalpipe,   {.v = copyurlcmd } },
+	{ TERMMOD,        XK_O,           externalpipe,   {.v = copyoutputcmd } },
+	{ MODKEY,         XK_l,           externalpipe,   {.v = copyurlcmd } },
+	{ MODKEY,         XK_o,           externalpipe,   {.v = copyoutputcmd } },
 
 	/* Vi mode */
 	{ MODKEY,         XK_c,           normalMode,     {.i =  0} },
 
 	/* Open a new window in the same working dir */
 	{ TERMMOD,        XK_Return,      newterm,        {.i =  0} },
+
+	/* Change the transparency of the terminal */
+	{ MODKEY,		      XK_s,		        changealpha,	  {.f = -0.05} },
+	{ MODKEY,		      XK_a,		        changealpha,	  {.f = +0.05} },
 };
 
 /*
