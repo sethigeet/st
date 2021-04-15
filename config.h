@@ -190,12 +190,12 @@ static unsigned int mousebg = 0;
 static unsigned int defaultattr = 11;
 /// Colors for the entities that are 'highlighted' in normal mode (search
 /// results currently on screen) [Vim Browse].
-static unsigned int highlightBg = 160;
-static unsigned int highlightFg = 15;
+static unsigned int highlightBg = 15;
+static unsigned int highlightFg = 259;
 /// Colors for highlighting the current cursor position (row + col) in normal
 /// mode [Vim Browse].
 static unsigned int currentBg = 1;
-static unsigned int currentFg = 15;
+static unsigned int currentFg = 259;
 
 /*
  * Force mouse select/shortcuts while mask is active (when MODE_MOUSE is set).
@@ -311,7 +311,7 @@ static Shortcut shortcuts[] = {
 	{ MODKEY,         XK_o,           externalpipe,   {.v = copyoutputcmd } },
 
 	/* Vi mode */
-	{ MODKEY,         XK_c,           normalMode,     {.i =  0} },
+	{ MODKEY,         XK_space,       normalMode,     {.i =  0} },
 
 	/* Open a new window in the same working dir */
 	{ TERMMOD,        XK_Return,      newterm,        {.i =  0} },

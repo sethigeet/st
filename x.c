@@ -1533,8 +1533,9 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
 		base.bg = highlightBg;
 		base.fg = highlightFg;
 	} else if ((base.mode & ATTR_CURRENT) && (win.mode & MODE_NORMAL)) {
-		base.bg = currentBg;
-		base.fg = currentFg;
+		/* base.bg = currentBg; */
+		/* base.fg = currentFg; */
+		xsetcursor(cursorshape);
 	}
 
 	if (IS_TRUECOL(base.fg)) {
@@ -1707,8 +1708,9 @@ xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og, Line line, int le
 	}
 
 	if ((g.mode & ATTR_CURRENT) && (win.mode & MODE_NORMAL)) {
-		g.bg = currentBg;
-		g.fg = currentFg;
+		/* g.bg = currentBg; */
+		/* g.fg = currentFg; */
+		xsetcursor(cursorshape);
 	}
 
 	/* draw the new one */
