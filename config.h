@@ -276,13 +276,14 @@ static Shortcut shortcuts[] = {
 	/* Zoom in and out */
 	{ TERMMOD,        XK_Prior,       zoom,           {.f = +1} },
 	{ TERMMOD,        XK_Next,        zoom,           {.f = -1} },
-	{ TERMMOD,        XK_Home,        zoomreset,      {.f =  0} },
 	{ TERMMOD,        XK_Up,          zoom,           {.f = +1} },
 	{ TERMMOD,        XK_Down,        zoom,           {.f = -1} },
 	{ TERMMOD,        XK_K,           zoom,           {.f = +1} },
 	{ TERMMOD,        XK_J,           zoom,           {.f = -1} },
 	{ TERMMOD,        XK_U,           zoom,           {.f = +2} },
 	{ TERMMOD,        XK_D,           zoom,           {.f = -2} },
+	{ TERMMOD,        XK_Home,        zoomreset,      {.f =  0} },
+	{ TERMMOD,        XK_0,           zoomreset,      {.f =  0} },
 
 	/* Copy and paste */
 	{ TERMMOD,        XK_C,           clipcopy,       {.i =  0} },
