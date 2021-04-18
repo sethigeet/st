@@ -43,7 +43,7 @@ The [suckless terminal (st)](https://st.suckless.org/) with some additional feat
 You can set your custom colors, fonts, transparency and padding(`borderpx`) in the `Xresources` file like so -
 
 ```
-*.font:	mono:pixelsize=15:antialias=true:autohint=true;
+*.font:	monospace:pixelsize=15:antialias=true:autohint=true;
 *.alpha: 0.95
 *.borderpx: 2
 *.color0: #111
