@@ -65,7 +65,7 @@ You can set your custom colors, fonts, transparency and padding(`borderpx`) in t
 
 **Defaults**:
 
-- Default font is the system `mono at 15pt`, meaning the font will match your system font. (This `mono` font is specified in the `fonts.conf` file on you system which is usually located at `~/.config/fontconfig/fonts.conf`)
+- Default font is the system `monospace at 15pt`, meaning the font will match your system font. (This `monospace` font is specified in the `fonts.conf` file on you system which is usually located at `~/.config/fontconfig/fonts.conf`)
 - Default alpha is `0.95 (ie. 95%)` opaque.
 - Default colors which are used are from the [`Ayu Mirage`](https://github.com/ayu-theme/ayu-colors) color scheme
 
