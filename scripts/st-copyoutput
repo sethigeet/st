@@ -29,7 +29,14 @@ eps1="$(echo "$ps1" | sed 's/[^^]/[&]/g; s/\^/\\^/g')"
 while getopts "hn" o; do
 	case "${o}" in
 		h) printf 'Required arguments for custom use:\n  -n: number of line of your prompt\n  -h: Show this message\n' && exit 1 ;;
-		n) echo "$(awk "/^$chosen$/{p=1;print;next} p&&/$eps1/{p=0};p" "$tmpfile" | head -n -"$(($2 - 1))")" | xclip -selection clipboard
+		n)
+			prompt_length="$(($2 - 1))"
+			if [ "$prompt_length" -gt 0 ]; then
+				awk "/^$chosen$/{p=1;print;next} p&&/$eps1/{p=0};p" "$tmpfile" | head -n -"$prompt_length" | xclip -selection clipboard
+			else
+				awk "/^$chosen$/{p=1;print;next} p&&/$eps1/{p=0};p" "$tmpfile" | xclip -selection clipboard
+			fi
+			;;
 		*) printf 'Invalid option: -%s\n' "$o" && exit 1 ;;
 	esac
 done
