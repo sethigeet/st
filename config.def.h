@@ -121,33 +121,33 @@ float alpha = 0.8;
 
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
-	/* Default color scheme (Ayu mirage) */
+	/* Default color scheme (Tokyonight) */
 	/* 8 Normal Colors */
-	"#191E2A",
-	"#FF3333",
-	"#BAE67E",
-	"#FFA759",
-	"#73D0FF",
-	"#FFD580",
-	"#95E6CB",
-	"#C7C7C7",
+	"#15161E",
+	"#F7768E",
+	"#9ECE6A",
+	"#E0AF68",
+	"#7AA2F7",
+	"#BB9AF7",
+	"#7DCFFF",
+	"#A9B1D6",
 
 	/* 8 Bright Colors */
-	"#686868",
-	"#F27983",
-	"#A6CC70",
-	"#FFCC66",
-	"#5CCFE6",
-	"#FFEE99",
-	"#95E6CB",
-	"#FFFFFF",
+	"#414868",
+	"#F7768E",
+	"#9ECE6A",
+	"#E0AF68",
+	"#7AA2F7",
+	"#BB9AF7",
+	"#7DCFFF",
+	"#C0CAF5",
 	[255] = 0,
-	/* more colors can be added after 255 to use with DefaultXX */
+	/* more colors can be added after 255 to use with Default */
 
-	"#CBCCC6", /* 256 -> cursor */
-	"#555555", /* 257 -> rev cursor*/
-	"#1F2430", /* 258 -> bg */
-	"#CBCCC6", /* 259 -> fg */
+	"#C0CAF5", /* 256 -> cursor */
+	"#414868", /* 257 -> rev cursor*/
+	"#1A1B26", /* 258 -> bg */
+	"#FFFFFF", /* 259 -> fg */
 };
 
 
